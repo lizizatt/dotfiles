@@ -1,0 +1,9 @@
+# Optional greeting sourced by ~/.bashrc.
+# Set BASH_WELCOME=0 to disable it for a terminal or in ~/.profile.
+
+if [[ ${BASH_WELCOME:-1} != 0 && ${SHLVL:-1} -eq 1 ]] &&
+        command -v fortune >/dev/null 2>&1 &&
+        command -v cowsay >/dev/null 2>&1 &&
+        command -v lolcat >/dev/null 2>&1; then
+    fortune | cowsay -f stegosaurus | lolcat
+fi

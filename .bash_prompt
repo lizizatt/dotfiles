@@ -1,0 +1,30 @@
+# Personal prompt sourced by ~/.bashrc.
+
+# Pick a heart for approximately one prompt in 25. PROMPT_COMMAND updates the
+# variable before Bash expands PS1, avoiding zsh-only `print` and stale RANDOM.
+_prompt_love_update() {
+    if (( RANDOM % 25 == 0 )); then
+        _PROMPT_LOVE='<3 '
+    else
+        _PROMPT_LOVE=
+    fi
+}
+_bashrc_add_prompt_command _prompt_love_update
+
+_PROMPT_TITLE=
+case "$TERM" in
+    xterm*|rxvt*)
+        _PROMPT_TITLE='\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]'
+        ;;
+esac
+
+case "$TERM" in
+    xterm-color|*-256color|screen*|tmux*)
+        PS1="$_PROMPT_TITLE"'${debian_chroot:+($debian_chroot)}\[\e[0;31m\]\u\[\e[0m\]\[\e[0;33m\]@\[\e[0m\]\[\e[0;32m\]\h:\[\e[0m\]\[\e[0;34m\]\w\[\e[0m\] ${_PROMPT_LOVE}\[\e[1;35m\]\$\[\e[0m\] '
+        ;;
+    *)
+        PS1="$_PROMPT_TITLE"'${debian_chroot:+($debian_chroot)}\u@\h:\w ${_PROMPT_LOVE}\$ '
+        ;;
+esac
+
+unset _PROMPT_TITLE
